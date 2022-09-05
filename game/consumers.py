@@ -7,6 +7,8 @@ from channels.consumer import SyncConsumer,StopConsumer,AsyncConsumer
 from channels.consumer import async_to_sync,database_sync_to_async
 import random
 from django.contrib import messages
+import django
+django.setup()
 from .models import Game
 from asgiref.sync import sync_to_async
 # import pywhatkit
