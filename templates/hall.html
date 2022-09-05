@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tic-Tac-Teo By IMS</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&display=swap" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  </head>
+  <style>
+    body{
+      font-family: 'Bangers', cursive;
+    }
+    .card {
+      width: 100vw;
+      height: 100vh;
+      background-color: rgb(9, 17, 35);
+      display: flex;
+      position: relative;
+      align-items: center;
+      justify-content: center;
+      animation: coloranimation 10s ease-in-out 3s infinite  ;
+    }
+    .innerdiv {
+      width: 40vw;
+      height: 90vh;
+      background-color: white;
+      border-radius: 1vw;
+      padding: 1vw;
+      background-image: linear-gradient(to right, rgb(68, 216, 253) , rgb(0, 106, 255));
+    }
+    .informdiv {
+        display: flex;
+      width: 100%;
+      background-color: rgb(255, 255, 255);
+      height: 10vh;
+      border-radius: 0.7vw;
+      margin-bottom: 1vw;
+    }
+    .player1{
+        background-color: red;
+        height: 10vh;
+        width: 50%;
+        border-radius: 0.70vw 0vw 0vw 0.70vw;
+        display: inline-block;
+        display: flex;
+        align-items: center;
+        padding: 1vw;
+        color: white;
+      }
+      .player2{
+        background-color: blue;
+        height: 10vh;
+        width: 50%;
+        border-radius: 0vw 0.70vw 0.70vw 0vw;
+        display: flex;
+        align-items: center;
+        padding: 1vw;
+        color: white;
+    }
+    .btnsdiv {
+      width: 38vw;
+      height: 70vh;
+      
+      background-color: rgb(255, 255, 255);
+      border-radius: 1vw;
+      align-self: center;
+    
+    }
+    .btnrow {
+      width: 100%;
+      background-color: gray;
+      background-image: linear-gradient(to right, rgb(68, 216, 253) , rgb(0, 106, 255));
+      border-radius: 0.7vw;
+      margin-bottom: 1vw;
+      padding: 0.7vw;
+      display: flex;
+
+    }
+    .gamebtn{
+        padding: 0.70vw;
+        height: 19vh;
+        width: 11.5vw;
+        font-size: 5vw;
+        margin: 0vw 0.5vw ;
+        border-radius: 0.70vw;
+        background-color: white;
+    }
+
+    /* For mobile Responsivenss*/
+    @media screen and (max-width:600px) {
+      .innerdiv{
+            width: 90vw;
+            padding: 3vw;
+            height: 49vh;
+            border-radius: 3vw;
+          }
+          .informdiv{
+            width: 84vw;
+            height: 8vh;
+            border-radius: 3vw;
+
+        }
+        h5{
+          font-size: 12px;
+        }
+        .btnsdiv{
+            width: 84vw;
+            height: 34.8vh;
+            border-radius: 3vw;
+            margin-top: 3vh;
+            padding: 0.70vw;
+          }
+        .gamebtn{
+          border-radius: 2vw;
+            height: 10vh;
+            width: 26vw;
+            
+        }
+        .btnrow{
+          height: 11vh;
+        }
+        #countdown{
+          width: 85vw;
+          height: 48vh;
+          font-size: 30px;
+        }
+        #countlabel{
+          font-size: 10vh;
+        }
+      }
+    @keyframes coloanimation {
+        0%{
+            background-image: linear-gradient(to right, red,yellow);
+        }
+        50%{
+            background-image: linear-gradient(to right, yellow,rgb(0, 255, 179));
+          }
+        100%{
+          background-image: linear-gradient(to right, rgb(0, 255, 179)),rgb(255, 255, 255);
+        }
+    }
+    .playername{
+      margin-right: 8vw;
+    }
+    .countdown{
+      position: absolute;
+      width: 38vw;
+      height: 88vh;
+      display: flex;
+      justify-self: center;
+      align-items: center;
+      align-content: center;
+      z-index: 10;
+      background-color: rgba(240, 248, 255, 0.374);
+      display: none;
+    }
+    .countlabel{
+      position: absolute;
+      left: 50%;
+      font-size: 5vw;
+    }
+    #winmodalbtn{
+      display: none;
+    }
+
+  </style>
+  {% block css %}
+  {% endblock css %}
+  <body onload='PlayMusic()'>
+    <div class="card">
+      <div class="innerdiv">
+        {% block body %}
+        <div id="countdown" class="countdown">
+          <h5 id="countlabel" class="countlabel">4</h5>
+        </div>
+        <div class="informdiv">
+            <div class="player1">
+                <h5 class="playername">{{players.0.host}}</h5>
+                <h5 id='timer'>30s</h5>
+              </div>
+              <div class="player2">
+                <h5 class="playername">{{players.0.join}}</h5>
+                <h5>30s</h5>
+              </div>
+            </div>
+            <div class="btnsdiv">
+              <div class="btnrow">
+            <span><button value="1" onclick="BtnClick(1)" id="gamebtn1" class="gamebtn"></button></span>
+            <span><button value="2" onclick="BtnClick(2)" id="gamebtn2" class="gamebtn"></button></span>
+            <span><button value="3" onclick="BtnClick(3)" id="gamebtn3" class="gamebtn"></button></span>
+          </div>
+          <div class="btnrow">
+            <span><button value="4" onclick="BtnClick(4)" id="gamebtn4" class="gamebtn"></button></span>
+            <span><button value="5" onclick="BtnClick(5)" id="gamebtn5" class="gamebtn"></button></span>
+            <span><button value="6" onclick="BtnClick(6)" id="gamebtn6" class="gamebtn"></button></span>
+          </div>
+          <div class="btnrow">
+            <span><button value="7" onclick="BtnClick(7)" id="gamebtn7" class="gamebtn"></button></span>
+            <span><button value="8" onclick="BtnClick(8)" id="gamebtn8" class="gamebtn"></button></span>
+            <span><button value="9" onclick="BtnClick(9)" id="gamebtn9" class="gamebtn"></button></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Button trigger modal -->
+    <button id='winmodalbtn' type="hidden" class="btn btn-primary" data-toggle="modal" data-target="#gameendmodal">
+      Launch demo modal
+    </button>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="gameendmodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLongTitle">Game Over</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <h1 id='winnername'></h1>
+          </div>
+          <div class="modal-footer">
+            <a href="/"><button type="button" class="btn btn-secondary" data-dismiss="modal">Lobby</button></a>
+            <button onclick='Reload()' type="button" class="btn btn-primary">Play again</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% load static %}
+    
+
+    
+    {% endblock body %}
+
+
+
+
+
+
+
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+
+    {% block script %}
+    <script>  
+   
+      const winsound = new Audio("{% static 'winner.mp3' %}")
+      const countdownsound = new Audio("{% static 'Countdown.mp3' %}")
+      const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3');
+      const background_music = new Audio('https://www.soundjay.com/free-music/sounds/heart-of-the-sea-01.mp3')
+      
+      background_music.volume = 0.2;
+      background_music.loop = true;
+      const draw_music = new Audio('https://www.soundjay.com/buttons/sounds/button-4.mp3')
+      function PlayMusic(){
+        background_music.play()
+      }
+
+      var O = "{{players.0.join}}"
+      var X = "{{players.0.host}}"
+      var turn = 'O'
+      var btns = ''
+      var btn1 = document.getElementById('gamebtn1');
+      var btn3 = document.getElementById('gamebtn3');
+      var btn2 = document.getElementById('gamebtn2');
+      var btn4 = document.getElementById('gamebtn4');
+      var btn5 = document.getElementById('gamebtn5');
+      var btn6 = document.getElementById('gamebtn6');
+      var btn7 = document.getElementById('gamebtn7');
+      var btn8 = document.getElementById('gamebtn8');
+      var btn9 = document.getElementById('gamebtn9');
+
+      btn1.disabled = true;
+      btn2.disabled = true;
+      btn3.disabled = true;
+      btn4.disabled = true;
+      btn5.disabled = true;
+      btn6.disabled = true;
+      btn7.disabled = true;
+      btn8.disabled = true;
+      btn9.disabled = true;
+      
+      var roomcode = '{{players.0.room_code}}'
+        var ws = new WebSocket("ws://"+window.location.host+"/ws/sc/");
+        ws.onopen = function(){
+            console.log('Connected')
+            background_music.play()
+            btn1.disabled = false;
+            btn3.disabled = false;
+            btn4.disabled = false;
+            btn5.disabled = false;
+            btn6.disabled = false;
+            btn7.disabled = false;
+            btn8.disabled = false;
+            btn9.disabled = false;
+            btn2.disabled = false;
+            ws.send(JSON.stringify({'mode':'hall','roomcode':roomcode}))
+            CountDown();
+          }
+          ws.onmessage = function(event){
+            console.log('message recived...',event)
+            var info = JSON.parse(event.data)
+
+            
+            if (info.btn == 'true'){
+              if (info.clicked != turn){
+                btn1.disabled = false;
+                btn2.disabled = false;
+                btn3.disabled = false;
+                btn4.disabled = false;
+                btn5.disabled = false;
+                btn6.disabled = false;
+                btn7.disabled = false;
+                btn8.disabled = false;
+                btn9.disabled = false;
+              }
+              else{
+                btns = ''
+              }
+              if (info.clicked == 'X'){
+                document.getElementById('gamebtn'+info.btnnum).innerHTML = info.clicked
+                document.getElementById('gamebtn'+info.btnnum).style.backgroundColor = 'red';
+                document.getElementById('gamebtn'+info.btnnum).style.color = 'white';
+                document.getElementById('gamebtn'+info.btnnum).disabled = true;
+                
+              }
+              else{
+                document.getElementById('gamebtn'+info.btnnum).innerHTML = info.clicked
+                document.getElementById('gamebtn'+info.btnnum).style.backgroundColor = 'blue';
+                document.getElementById('gamebtn'+info.btnnum).style.color = 'white';
+                document.getElementById('gamebtn'+info.btnnum).disabled = true;
+              }
+              
+              turn = info.clicked
+              
+              if (btn1.innerHTML=='O' && btn2.innerHTML=='O' && btn3.innerHTML=='O' || btn4.innerHTML=='O' && btn5.innerHTML=='O' && btn6.innerHTML=='O' || btn7.innerHTML=='O' && btn8.innerHTML=='O' && btn9.innerHTML=='O' || btn1.innerHTML=='O' && btn4.innerHTML=='O' && btn7.innerHTML=='O' || btn2.innerHTML=='O' && btn5.innerHTML=='O' && btn8.innerHTML=='O' || btn3.innerHTML=='O' && btn6.innerHTML=='O' && btn9.innerHTML=='O' || btn1.innerHTML=='O' && btn5.innerHTML=='O' && btn9.innerHTML=='O' || btn3.innerHTML=='O' && btn5.innerHTML=='O' && btn7.innerHTML=='O'){
+                console.log('you win')
+
+        
+                if (turn==info.clicked){
+                  document.getElementById('winnername').innerHTML = O + " " +'Won the match'
+                }
+                document.getElementById('winmodalbtn').click = true
+                $('#gameendmodal').modal('show')
+                winsound.play()
+              }
+              else if (btn1.innerHTML=='X' && btn2.innerHTML=='X' && btn3.innerHTML=='X' || btn4.innerHTML=='X' && btn5.innerHTML=='X' && btn6.innerHTML=='X' || btn7.innerHTML=='X' && btn8.innerHTML=='X' && btn9.innerHTML=='X' || btn1.innerHTML=='X' && btn4.innerHTML=='X' && btn7.innerHTML=='X' || btn2.innerHTML=='X' && btn5.innerHTML=='X' && btn8.innerHTML=='X' || btn3.innerHTML=='X' && btn6.innerHTML=='X' && btn9.innerHTML=='X' || btn1.innerHTML=='X' && btn5.innerHTML=='X' && btn9.innerHTML=='X' || btn3.innerHTML=='X' && btn5.innerHTML=='X' && btn7.innerHTML=='X'){
+                winsound.play()
+                console.log('you win')
+                if (turn==info.clicked){
+                  document.getElementById('winnername').innerHTML = X + " " +'Won the match'
+                  $('#gameendmodal').modal('show')
+                  winsound.play()
+          
+                }
+            
+              }
+              else if (btn1.innerHTML != '' && btn2.innerHTML != '' && btn3.innerHTML != '' && btn4.innerHTML != '' && btn5.innerHTML != '' && btn6.innerHTML != '' && btn7.innerHTML != '' && btn8.innerHTML != '' && btn9.innerHTML != ''){
+                document.getElementById('winnername').innerHTML = 'Match Draw!'
+                document.getElementById('winmodalbtn').click = true
+                $('#gameendmodal').modal('show')
+                draw_music.play()
+              }
+              
+            }
+            else if (info.btnnum == 'playagain'){
+              
+              location.reload()
+            }
+           
+            
+        }
+          ws.onclose = function(){
+            console.log('disconnected')
+          }
+       function CountDown() {
+        countdownsound.play()
+        var a = document.getElementById('countlabel').innerHTML;
+        document.getElementById('countdown').style.display = 'flex';
+        if (a != 0){
+          
+          document.getElementById('countlabel').innerHTML = a-1
+        }
+        else{
+          document.getElementById('countdown').style.display = 'none';
+
+          clearInterval(timer)
+        }
+     
+       }
+       const timer = setInterval(CountDown,1000);
+        
+       console.log(recentbtn)
+
+        function BtnClick(value){
+          audio.play()
+          
+          if (turn=="O"){
+            turn = 'X'
+          }
+          else{
+            turn = 'O'
+          }
+          if (turn=='X'){
+            document.getElementById('gamebtn'+value).style.backgroundColor = 'red'
+            document.getElementById('gamebtn'+value).style.color = 'white'
+            document.getElementById('gamebtn'+value).disabled = true;
+          }
+          else{
+            document.getElementById('gamebtn'+value).style.backgroundColor = 'blue'
+            document.getElementById('gamebtn'+value).style.color = 'white'
+            document.getElementById('gamebtn'+value).disabled = true
+          }
+      
+          
+          document.getElementById('gamebtn'+value).innerHTML = turn;
+          ws.send(JSON.stringify({'roomcode':roomcode,'name':value,'mode': 'hallevent','recent':document.get,'clicked':turn}));
+          btn1.disabled = true;
+          btn2.disabled = true;
+          btn3.disabled = true;
+          btn4.disabled = true;
+          btn5.disabled = true;
+          btn6.disabled = true;
+          btn7.disabled = true;
+          btn8.disabled = true;
+          btn9.disabled = true;
+          btns = 'disabled'
+        };
+
+        function Reload(){
+          ws.send(JSON.stringify({'roomcode':roomcode,'name':'playagain','mode': 'playagain','clicked':'none','player':turn}))
+        }
+        
+        
+        
+        var counter = 10;
+        var time = 1;
+        function RunTimer(duration,start) {
+          time = start - duration;
+          console.log(time)
+          document.getElementById("timer").innerHTML = time;
+        }
+
+      
+
+    </script>
+    {% endblock script %}
+  </body>
+</html>

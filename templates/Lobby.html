@@ -1,0 +1,307 @@
+{% extends 'hall.html' %} {% block css %}
+
+<style>
+  .container {
+    padding: 5vw;
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    position: relative;
+  }
+  .actionbtnsdiv {
+    position: absolute;
+    align-self: center;
+    top: 25vh;
+    left: 5vw;
+  }
+  .actionbtn {
+    background-color: rgb(34, 68, 79);
+    width: 10vw;
+    height: 20vh;
+    margin: 2vw;
+  }
+  .roominfocontainer{
+    display: flex;
+    align-items: center;
+    justify-items: center;
+    justify-content: center;
+  }
+  #roominfodiv{
+    visibility: hidden;
+    display: flex;
+    background-color: rgba(240, 248, 255, 0.263);
+    flex-direction: column;
+    box-shadow: 0 0 5px 0 ;
+    width: 80%;
+    border-radius: 1vw;
+    align-items: center;
+    justify-content: center;
+    padding: 1vw;
+    align-self: center;
+  }
+  #alertdiv{
+    display: none;
+  }
+  .spinner-border{
+    display: none;
+  }
+  @media screen and (max-width:600px) {
+    .actionbtn{
+        width: 100px;
+        height: 60px;
+    }
+    
+  }
+  
+
+</style>
+
+{% endblock css %} {% block body %}
+
+<div class="container">
+  {% for msg in messages%}
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <strong>Oops!</strong> {{msg}}
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="alert"
+      aria-label="Close"
+    ></button>
+  </div>
+  {% endfor %}
+
+  <div id='actionbtnsdiv' class="actionbtnsdiv">
+    <button
+      onclick="audio.play()"
+      data-target="#createmodal"
+      data-toggle="modal"
+      id="createmodalbtn"
+      class="actionbtn btn btn-primary"
+    >
+      Create
+    </button>
+    <button
+      onclick="audio.play()"
+      data-target="#joinmodal"
+      data-toggle="modal"
+      id="joinmodalbtn"
+      class="actionbtn btn btn-primary"
+    >
+      Join
+    </button>
+  </div>
+</div>
+
+{% comment %} modal {% endcomment %}
+<!-- Button trigger modal -->
+
+<!-- Modal for create -->
+<div
+  class="modal fade"
+  id="createmodal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div  class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Create Room</h5>
+        <button
+          type="button"
+          class="close"
+          id="closebtn"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <form action="/hall/" method='post'> -->
+        <div class="form-group">
+          <label for="name">Enter your name</label>
+          <input
+            name="name"
+            type="text"
+            class="form-control"
+            id="name"
+            placeholder="Enter name"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button onclick="audio.play()" type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cancel
+        </button>
+        <button
+          type="submit"
+          id="createbtn"
+          class="btn btn-primary"
+          
+        >
+          Create <div id="loadercreate" class="spinner-border spinner-border-sm" role="status">
+          
+          </div>
+        </button>
+      </div>
+      <!-- </form> -->
+    </div>
+  </div>
+</div>
+{% comment %} create modal end here {% endcomment %} 
+
+{% comment %} modal for join {% endcomment %}
+<div
+  class="modal fade"
+  id="joinmodal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Join Room</h5>
+        <button
+        id="closebtn2"
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          
+          <div id="alertdiv" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Oops!_</strong><label id="alertlabel"></label>
+            <button  type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          <label for="name">Enter your name</label>
+          <input required
+            name="name"
+            type="text"
+            class="form-control"
+            id="namejoin"
+            placeholder="Enter name"
+          />
+        </div>
+        
+        <div class="form-group">
+          <label for="name">Enter room code</label>
+          <input required
+            name="joinername"
+            type="text"
+            class="form-control"
+            id="roomcodejoin"
+            placeholder="Room code"
+          />
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button onclick="audio.play()" id="closebtn" type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+        <button id="joinbtn" type="button" class="btn btn-primary">Join <div id="loaderjoin" class="spinner-border spinner-border-sm" role="status">
+          
+        </div></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- After name submit -->
+<div class="roominfocontainer">
+<div id="roominfodiv">
+  <h2 id="greetings"></h2>
+  <label for="roomscode">Room code</label>
+  <h2 onclick="CopyCode()" id="roomscode"></h2>
+  <a id="whatsapplink"	data-action="share/whatsapp/share"><button id="whatsappbtn" type="button" class="btn btn-success">Send on Whatsapp</button></a> <br>
+  <button class="btn btn-primary" type="button" disabled>
+    <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+    Waiting for opponent...
+  </button>
+</div>
+</div>
+ 
+{% endblock body %}
+
+{% block script %}
+<script>
+  const audio = new Audio('https://www.soundjay.com/buttons/sounds/button-3.mp3');
+  const background_music = new Audio('https://www.soundjay.com/free-music/sounds/heart-of-the-sea-01.mp3')
+  background_music.volume = 0.4;
+  background_music.loop = true;
+  var ws = new WebSocket("ws://"+window.location.host+"/ws/sc/");
+  ws.onopen = function () {
+    background_music.play()
+    console.log("Connected");
+  };
+  ws.onmessage = function (event) {
+    console.log(event)
+    var roominfo = JSON.parse(event.data)
+    if (roominfo.mode == 'create'){
+      document.getElementById('closebtn').click();
+      document.getElementById('createbtn').disabled = true;
+      document.getElementById('actionbtnsdiv').style.display = 'none';
+      document.getElementById('roominfodiv').style.visibility = 'visible';
+      document.getElementById('greetings').innerHTML = 'Welcome' + ' '+ roominfo.hostername;
+      document.getElementById('roomscode').innerHTML = roominfo.roomcode;
+      document.getElementById('whatsapplink').href = "whatsapp://send?text= Your friend invited you to join the game here's the roomcode : " + "*"+roominfo.roomcode+"*" + " " + "copy the room code and join the game using this link : " + "*"+window.location.href+"*"
+    }
+    else{
+      if (roominfo.mode == 'joined'){
+        document.getElementById('roomscode').innerHTML = roominfo.joinername + " " + 'Joined'
+        window.location.href = '/hall/'+ roominfo.roomcode
+      }
+      else{
+        console.log(roominfo.message)
+        document.getElementById('alertdiv').style.display = 'flex';
+        document.getElementById('loaderjoin').style.display = 'none';
+        document.getElementById('alertlabel').innerHTML = +" " + roominfo.message
+      }
+    }
+  };
+
+  const createbtn = document.getElementById("createbtn");
+  createbtn.onclick = function () {
+    audio.play()
+    document.getElementById('loadercreate').style.display = 'inline-flex';
+    ws.send(JSON.stringify({'hostername':document.getElementById("name").value,'mode':'create'}));
+  };
+  
+  
+  const joinbtn = document.getElementById("joinbtn");
+  joinbtn.onclick = function () {
+    audio.play()
+    document.getElementById('loaderjoin').style.display = 'inline-flex';
+    document.getElementById('closebtn').disabled = true;
+    document.getElementById('closebtn2').disabled = true;
+    ws.send(JSON.stringify({'roomcode':document.getElementById('roomcodejoin').value,'name':document.getElementById('namejoin').value,'mode': 'join'}));
+  };
+
+  var code = document.getElementById('').innerHTML;
+  function CopyCode(){
+    if (navigator && navigator.clipboard && navigator.clipboard.writeText)
+      return navigator.clipboard.writeText(code);
+    return Promise.reject('The Clipboard API is not available.');
+
+  }
+
+
+  $("#createmodalbtn").on("shown.bs.modal", function () {
+    $("#myInput").trigger("focus");
+  });
+
+  $("#joinmodalbtn").on("shown.bs.modal", function () {
+    $("#myInput").trigger("focus");
+  });
+</script>
+{% endblock script %}

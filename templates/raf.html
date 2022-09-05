@@ -1,0 +1,40 @@
+if (btn1=='O' and btn2=='O' and btn3=='O' or btn3=='O' and btn4=='O' and btn5=='O' or btn7=='O' and btn8=='O' and btn9=='O' or btn1=='O' and btn4=='O' and btn7=='O' or btn2=='O' and btn4=='O' and btn8=='O' or btn3=='O' and btn6=='O' and btn9=='O' or btn1=='O' and btn5=='O' and btn9=='O' or btn3=='O' and btn5=='O' and btn9=='O'){
+    console.log('you win')
+  }
+
+
+  var btn2 = document.getElementById('gamebtn2').innerHTML;
+        var btn1 = document.getElementById('gamebtn1').innerHTML;
+        var btn3 = document.getElementById('gamebtn3').innerHTML;
+        var btn4 = document.getElementById('gamebtn4').innerHTML;
+        var btn5 = document.getElementById('gamebtn5').innerHTML;
+        var btn6 = document.getElementById('gamebtn6').innerHTML;
+        var btn7 = document.getElementById('gamebtn7').innerHTML;
+        var btn8 = document.getElementById('gamebtn8').innerHTML;
+        var btn9 = document.getElementById('gamebtn9').innerHTML;
+
+
+
+        if (info.clicked != turn){
+
+            btn1.disabled = false;
+            btn2.disabled = false;
+            btn3.disabled = false;
+            btn4.disabled = false;
+            btn5.disabled = false;
+            btn6.disabled = false;
+            btn7.disabled = false;
+            btn8.disabled = false;
+            btn9.disabled = false;
+          }
+          else{
+            btn1.disabled = true;
+            btn2.disabled = true;
+            btn3.disabled = true;
+            btn4.disabled = true;
+            btn5.disabled = true;
+            btn6.disabled = true;
+            btn7.disabled = true;
+            btn8.disabled = true;
+            btn9.disabled = true;
+          }
