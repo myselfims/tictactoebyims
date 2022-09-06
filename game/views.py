@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect
-from django.contrib import messages
+
 from .models import Game
 import random
 
@@ -21,4 +21,4 @@ def home(request,roomcode):
     else:
         return redirect('/')
 def lobby(request):
-    return render(request,'lobby.html')
+    return render(request,'Lobby.html')
