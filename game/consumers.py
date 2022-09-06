@@ -139,7 +139,10 @@ class ForCreatingRoom(AsyncConsumer):
         sleep(1)
         
 
-
+    async def disconnect(self, code):
+         
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+        self.disconnected = True  # disconnected, set flag to True
         
 # class ForJoiningRoom(AsyncConsumer):
     
