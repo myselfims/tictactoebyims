@@ -139,7 +139,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [(os.environ.get('REDIS_URL', 'http://localhost:6379') )],
         },"OPTIONS": {
-             "PASSWORD": "5OoXpixVckpZUDpYI9h7Q7MN52OxmPOx",
+             "REDIS_PASSWORD": "5OoXpixVckpZUDpYI9h7Q7MN52OxmPOx",
              "CLIENT_CLASS": "redis_cache.client.DefaultClient",
         },
     },
