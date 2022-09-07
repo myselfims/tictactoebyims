@@ -131,15 +131,15 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import urllib.parse
 # redis_url = os.environ.get('REDIS_URL', 'http://localhost:6379')    
-redis_url = os.environ.get('REDIS_URL', 'http://localhost:6379')    
+# redis_url = os.environ.get('REDIS_URL', 'http://localhost:6379')    
 
-redis_url = urllib.parse.urlparse(redis_url)
+# redis_url = urllib.parse.urlparse(redis_url)
 
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(redis_url.hostname,redis_url.port)],
+            "hosts": [(os.environ.get('REDIS_URL', 'http://localhost:6379'))],
         },
     },
 }
