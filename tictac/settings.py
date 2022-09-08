@@ -139,10 +139,7 @@ CHANNEL_LAYERS = {
         "CONFIG": {
             "hosts": [(os.environ.get('REDIS_URL', 'http://localhost:6379') )],
         },
-        "OPTIONS": {
-             "REDIS_PASSWORD": "Imran@12",
-
-        },
+       
     },
 }
 
