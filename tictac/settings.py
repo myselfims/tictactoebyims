@@ -152,6 +152,16 @@ CHANNEL_LAYERS = {
     },
 }
 
+CACHES = {
+        'default': {
+            'BACKEND': 'redis_cache.RedisCache',
+            'LOCATION': '%s:%s' % (redis_url.hostname, redis_url.port),
+            'OPTIONS': {
+                'PASSWORD': redis_url.password,
+                'DB': 0,
+        }
+    }
+}
 
 # CHANNEL_LAYERS = {
 #     "default": {
