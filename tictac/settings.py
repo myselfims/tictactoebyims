@@ -146,7 +146,7 @@ CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(redis_url.hostname, 6379) ],
+            "hosts": [('tictactoebyims.herokuapp.com', redis_url.port) ],
         },
        
     },
