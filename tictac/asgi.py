@@ -18,6 +18,7 @@ import game.routing
 
 application = ProtocolTypeRouter({
     'http': get_asgi_application(),
+    'https': get_asgi_application(),
     'websocket': URLRouter(
         game.routing.ws_patterns
     )
