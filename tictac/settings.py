@@ -130,38 +130,39 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 import urllib.parse
-redis_url = os.environ.get('REDIS_URL', 'http://localhost:6379')    
+redis_url = os.environ.get('redis://red-cegclbirrk0ecbb9ng7g:6379', 'http://localhost:6379')    
 redis_url = urllib.parse.urlparse(redis_url)
 
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": [(redis_url.hostname, 6379) ],
-#         },
-       
-#     },
-# }
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
         "CONFIG": {
-            "hosts": [(redis_url.hostname, 18288) ],
+            "hosts": [(redis_url.hostname, 6379) ],
         },
        
     },
 }
 
-CACHES = {
-        'default': {
-            'BACKEND': 'redis_cache.RedisCache',
-            'LOCATION': '%s:%s' % (redis_url.hostname, redis_url.port),
-            'OPTIONS': {
-                'PASSWORD': redis_url.password,
-                'DB': 0,
-        }
-    }
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": [(redis_url.hostname, 18288) ],
+#         },
+       
+#     },
+# }
+
+# CACHES = {
+#         'default': {
+#             'BACKEND': 'redis_cache.RedisCache',
+#             'LOCATION': '%s:%s' % (redis_url.hostname, redis_url.port),
+#             'OPTIONS': {
+#                 'PASSWORD': redis_url.password,
+#                 'DB': 0,
+#         }
+#     }
+# }
 
 # CHANNEL_LAYERS = {
 #     "default": {
