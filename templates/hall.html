@@ -297,7 +297,8 @@
       
       var roomcode = '{{players.0.room_code}}'
         var ws_schema = window.location.protocol == "https" ? "wss" : "ws";
-        var ws = new WebSocket(ws_schema+"://"+window.location.host+"/ws/sc/");
+        <!-- var ws = new WebSocket(ws_schema+"://"+window.location.host+"/ws/sc/"); -->
+        var ws = new WebSocket("wss://"+window.location.host+"/ws/sc/");
         ws.onopen = function(){
             console.log('Connected')
             background_music.play()

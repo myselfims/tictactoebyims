@@ -240,7 +240,8 @@
   background_music.volume = 0.4;
   background_music.loop = true;
   var ws_schema = window.location.protocol == "https" ? "wss" : "ws";
-  var ws = new WebSocket(ws_schema+"://"+window.location.host+"/ws/sc/");
+  <!-- var ws = new WebSocket(ws_schema+"://"+window.location.host+"/ws/sc/"); -->
+  var ws = new WebSocket("wss://"+window.location.host+"/ws/sc/");
   ws.onopen = function () {
     background_music.play()
     console.log("Connected");
